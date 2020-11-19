@@ -1,5 +1,5 @@
 const config = {
     port: process.env.PORT || 3000,
-    JwtSecret: "BeeMovie"
+    JwtSecret: "AccordingToAllKnownLawsOfAviation"
   }
   export default config
