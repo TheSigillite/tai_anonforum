@@ -23,8 +23,8 @@ function getAllMovies() {
 }
 
 function addMovie(movie) {
-    let db = new sqlite3.Database('./anonforum.sqlite');
-    let lastIDquery = 'SELECT MAX(movie_id) AS lastMovieID FROM movies';
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let lastIDquery = 'SELECT MAX(movie_id) AS lastMovieID FROM Movies';
     return new Promise((resolve,reject) => {
             var lastID = undefined
             db.get(lastIDquery,(error,result)=>{
@@ -34,7 +34,7 @@ function addMovie(movie) {
                     reject(error)
                 } else {
                     lastID = result.lastMovieID+1
-                    let insertquery = "INSERT INTO Movies(movie_id,title,cover,director,premiere) " +
+                    let insertquery = "INSERT INTO Movies (movie_id,title,cover,director,premiere) " +
                     "VALUES(" + lastID + ",'" + movie.title + "','" + movie.cover + "','" + movie.director + "','" + movie.premiere + "')"
                     db.run(insertquery,(error) => {
                         if (error) {
@@ -52,7 +52,7 @@ function addMovie(movie) {
 }
 
 function deleteMovie(movieID){
-    let db = new sqlite3.Database('./anonforum.sqlite');
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let deleteQuery = 'DELETE FROM Movies WHERE movie_id = '+movieID;
     return new Promise((resolve,reject) => {
         db.run(deleteQuery,(error)=>{
@@ -69,7 +69,7 @@ function deleteMovie(movieID){
 }
 
 function updateMovie(movie){
-    let db = new sqlite3.Database('./anonforum.sqlite');
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let updateQuery = "UPDATE Movies SET title = '"+ movie.title +"', cover = '"+ movie.cover +"', director = '"
         + movie.director +"',premiere = "+ movie.premiere +" WHERE movie_id = "+movie.movie_id
     return new Promise((resolve,reject) => {

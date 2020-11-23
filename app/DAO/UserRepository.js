@@ -6,7 +6,7 @@ const { result } = require('lodash');
 function newUser(newUser){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let lastIdQuery = "SELECT MAX(acc_id) as lastAccID FROM Useraccounts"
-    return Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{
         var lastId = 1
         db.get(lastIdQuery,(error,result)=>{
             if (error) {
@@ -14,8 +14,10 @@ function newUser(newUser){
                 console.log(error)
                 reject(error)
             } else {
-                if(lastId < result.lastAccID){
+                if(lastId <= result.lastAccID){
                     lastId = result.lastAccID+1
+                    console.log(result.lastAccID)
+                    console.log(lastId)
                 }
                 let insertQuery = "INSERT INTO Useraccounts(acc_id,login,is_adm) VALUES ("
                     +lastId+",'"+newUser.login+"',FALSE)"
@@ -71,7 +73,7 @@ function getUserById(acc_id){
 }
 
 function makeModerator(acc_id){
-    let db = new sqlite3.Database('./anonforum.sqlite');
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let updateQuery = "UPDATE Useraccounts SET is_adm=TRUE WHERE acc_id="+acc_id
     return new Promise((resolve,reject) => {
         db.run(updateQuery,(error) => {

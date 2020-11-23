@@ -6,7 +6,7 @@ const { result } = require('lodash');
 function newReview(newreview,user){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let lastIdQuery = "SELECT MAX(rev_id) as lastRevID FROM Reviews"
-    return Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{
         var lastId = 1
         db.get(lastIdQuery,(error,result)=>{
             if (error) {
@@ -37,7 +37,7 @@ function newReview(newreview,user){
 function deleteReview(rev_id){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let deleteQuery = "DELETE FROM Reviews WHERE rev_id = "+rev_id;
-    return Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{
         db.run(deleteQuery,(error)=>{
             if (error) {
                 console.log('Error running sql: ' + deleteQuery)

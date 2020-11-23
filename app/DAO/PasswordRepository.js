@@ -7,7 +7,7 @@ function savePassword(newUser,acc_id){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let insertQuery = "INSERT INTO UserPasswd(acc_id,passwd) VALUES("
         +acc_id+",'"+newUser.passwd+"')"
-    return Promise((resolve,reject) => {
+    return new Promise((resolve,reject) => {
         db.run(insertQuery,(error)=>{
             if (error) {
                 console.log('Error running sql: ' + insertQuery)
