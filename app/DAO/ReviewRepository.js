@@ -86,9 +86,28 @@ function getMovieReviews(movie_id){
     })
 }
 
+function getReviewById(rev_id){
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let getQuery = "SELECT * FROM Reviews WHERE rev_id="+rev_id
+    return new Promise((resolve, reject) => {
+        db.all(getQuery, [], (error, result) => {
+            if (error) {
+                console.log('Error running sql: ' + getQuery)
+                console.log(error)
+                reject(error)
+            } else {
+                console.log(result)
+                db.close()
+                resolve(result)
+            }
+        })
+    })
+}
+
 export default {
     getMovieReviews: getMovieReviews,
     newReview: newReview,
     deleteReview: deleteReview,
-    deleteAllMoviesReviews: deleteAllMoviesReviews
+    deleteAllMoviesReviews: deleteAllMoviesReviews,
+    getReviewById: getReviewById
 }

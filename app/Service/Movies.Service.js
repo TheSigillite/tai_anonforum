@@ -3,11 +3,22 @@ import VerifyUser from '../Auth/VerifyUser'
 import MovieRepository from '../DAO/MovieRepository'
 import ReviewRepository from '../DAO/ReviewRepository'
 
+/**
+ * Retrieves a list of all movies currently in database
+ */
 async function getAllMovies(){
     let allMovies = await MovieRepository.getAllMovies()
     return allMovies
 }
-
+/**
+ * Add new movie to the database after verifying moderator's token
+ * @param {object} newMovie 
+ * {title: string - movie title,
+ *  cover: string - cover pictue URL,
+ *  director: string - movie's director,
+ *  premiere: year the movie premiered in cinemas}
+ * @param {string} token - JWT authorization token
+ */
 async function addMovie(newMovie,token){
     let verificationResult = await VerifyUser.verifyToken(token,true)
     console.log(verificationResult)
@@ -26,6 +37,16 @@ async function addMovie(newMovie,token){
     }
 }
 
+/**
+ * Updates existing movie in database after verifying moderator's token
+ * @param {object} updatedMovie 
+ * {movie_id: number - id of a movie to update,
+ *  title: string - movie title,
+ *  cover: string - cover pictue URL,
+ *  director: string - movie's director,
+ *  premiere: year the movie premiered in cinemas}
+ * @param {string} token - JWT authorization token
+ */
 async function updateMovie(updatedMovie,token){
     let verificationResult = await VerifyUser.verifyToken(token,true)
     try{
@@ -40,7 +61,11 @@ async function updateMovie(updatedMovie,token){
         return {succes: false, message: "An unexpected error has occured: "+error.message}
     }
 }
-
+/**
+ * Deletes movie with a specified id after verifying moderator's token
+ * @param {object} toDelete {movie_id: number - id of a movie to delete}
+ * @param {string} token JWT authorization token
+ */
 async function deleteMovie(toDelete,token){
     let verificationResult = await VerifyUser.verifyToken(token,true)
     try{
