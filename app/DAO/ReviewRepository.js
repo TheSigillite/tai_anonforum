@@ -51,6 +51,23 @@ function deleteReview(rev_id){
     })
 }
 
+function deleteAllMoviesReviews(movie_id){
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let deleteQuery = "DELETE FROM Reviews WHERE movie_id = "+movie_id;
+    return new Promise((resolve,reject)=>{
+        db.run(deleteQuery,(error)=>{
+            if (error) {
+                console.log('Error running sql: ' + deleteQuery)
+                console.log(error)
+                reject(error)
+            } else {
+                db.close()
+                resolve()
+            }
+        })
+    })
+}
+
 function getMovieReviews(movie_id){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let getQuery = "SELECT * FROM Reviews WHERE movie_id="+movie_id
@@ -72,5 +89,6 @@ function getMovieReviews(movie_id){
 export default {
     getMovieReviews: getMovieReviews,
     newReview: newReview,
-    deleteReview: deleteReview
+    deleteReview: deleteReview,
+    deleteAllMoviesReviews: deleteAllMoviesReviews
 }

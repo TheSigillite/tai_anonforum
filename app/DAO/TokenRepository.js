@@ -58,9 +58,9 @@ function getTokenByTokenValue(val){
     })
 }
 
-function deleteToken(acc_id){
+function deleteToken(val){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
-    let deleteQuery = 'DELETE FROM Tokens WHERE acc_id = '+acc_id;
+    let deleteQuery = "DELETE FROM Tokens WHERE value='"+val+"'";
     return new Promise((resolve,reject) => {
         db.run(deleteQuery,(error)=>{
             if (error) {
