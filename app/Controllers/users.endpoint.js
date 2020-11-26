@@ -32,6 +32,16 @@ const userEndpoint = (router) => {
             response.status(409).send(result)
         }
     })
+
+    router.post('/users/makemod', async (request,response,next) => {
+        let token = request.header('x-auth-token')
+        let result = await UsersService.makeMod(request.body,token)
+        if(result.succes){
+            response.status(200).send(result)
+        } else {
+            response.status(409).send(result)
+        }
+    })
 }
 
 export default userEndpoint

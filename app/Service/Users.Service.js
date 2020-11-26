@@ -37,9 +37,29 @@ async function logoutUser(userToken){
     return result
 }
 
+async function makeMod(newMod,moderatorToken){
+    let verificationResult = VerifyUser.verifyToken(moderatorToken,true)
+    try{
+        if(verificationResult.succes){
+            let userToMod = await UserRepository.getUserByLogin(newMod.login)
+            if(userToMod == undefined){
+                return {succes: false, message: "User with this username does not exist"}
+            } else {
+                await UserRepository.makeModerator(userToMod.acc_id)
+                return {succes: true, message: "Your review has been added."}
+            }
+        } else {
+            return verificationResult
+        }
+    } catch(error){
+        console.log(error)
+        return {succes: false, message: "An unexpected error has occured: "+error.message}
+    }
+}
 
 export default {
     registerUser: registerUser,
     loginUser: loginUser,
-    logoutUser: logoutUser
+    logoutUser: logoutUser,
+    makeMod: makeMod
 }

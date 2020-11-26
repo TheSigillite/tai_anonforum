@@ -9,7 +9,7 @@ import UserRepository from '../DAO/UserRepository'
 async function getMovieReviews(movie_id){
     let reviewsRaw = await ReviewRepository.getMovieReviews(movie_id)
     var reviewsDone = []
-    for(i=0;i<reviewsRaw.length;i++){
+    for(var i=0;i<reviewsRaw.length;i++){
         var review = reviewsRaw[i]
         var poster = await UserRepository.getUserById(review.acc_id)
         reviewsDone.push({rev_id: review.rev_id, author: poster.login, rev: review.rev})
@@ -25,7 +25,7 @@ async function addNewReview(newReview,token){
     let verificationResult = await VerifyUser.verifyToken(token,false)
     try{
         if(verificationResult.succes){
-            await ReviewRepository.newReview({movie_id: newReview.movie_id, acc_id: verificationResult.acc_id, rev: newReview.rev})
+            await ReviewRepository.newReview(newReview,verificationResult.user)
             return {succes: true, message: "Your review has been added."}
         } else {
             return verificationResult
@@ -46,7 +46,9 @@ async function deleteReview(revToDelete,token){
     try{
         if(verificationResult.succes){
             var actionPerformer = verificationResult.user
-            if(actionPerformer.is_adm || actionPerformer.acc_id===review.acc_id){
+            console.log(actionPerformer)
+            console.log(review)
+            if(actionPerformer.is_adm || actionPerformer.acc_id==review.acc_id){
                 await ReviewRepository.deleteReview(revToDelete.rev_id)
                 return {succes: true, message: "The review has been deleted"}
             } else {

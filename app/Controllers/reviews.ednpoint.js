@@ -30,3 +30,5 @@ const reviewsEndpoint = (router) => {
     })
 
 }
+
+export default reviewsEndpoint

@@ -14,7 +14,7 @@ function newReview(newreview,user){
                 console.log(error)
                 reject(error)
             } else {
-                if(lastId < result.lastRevID){
+                if(lastId <= result.lastRevID){
                     lastId = result.lastRevID+1
                 }
                 let insertQuery = "INSERT INTO Reviews(rev_id,movie_id,acc_id,rev) VALUES ("
@@ -90,7 +90,7 @@ function getReviewById(rev_id){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let getQuery = "SELECT * FROM Reviews WHERE rev_id="+rev_id
     return new Promise((resolve, reject) => {
-        db.all(getQuery, [], (error, result) => {
+        db.get(getQuery, [], (error, result) => {
             if (error) {
                 console.log('Error running sql: ' + getQuery)
                 console.log(error)
