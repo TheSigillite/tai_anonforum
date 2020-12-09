@@ -46,8 +46,6 @@ async function deleteReview(revToDelete,token){
     try{
         if(verificationResult.succes){
             var actionPerformer = verificationResult.user
-            console.log(actionPerformer)
-            console.log(review)
             if(actionPerformer.is_adm || actionPerformer.acc_id==review.acc_id){
                 await ReviewRepository.deleteReview(revToDelete.rev_id)
                 return {succes: true, message: "The review has been deleted"}

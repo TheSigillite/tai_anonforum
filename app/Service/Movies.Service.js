@@ -11,6 +11,14 @@ async function getAllMovies(){
     return allMovies
 }
 /**
+ * Retrieves movie of a specified id
+ * @param {number} movie_id - Id of movie to get
+ */
+async function getMovie(movie_id){
+    let movie = await MovieRepository.getMovieByMovieId(movie_id)
+    return movie;
+}
+/**
  * Add new movie to the database after verifying moderator's token
  * @param {object} newMovie 
  * {title: string - movie title,
@@ -84,6 +92,7 @@ async function deleteMovie(toDelete,token){
 
 export default {
     getAllMovies: getAllMovies,
+    getMovie: getMovie,
     addMovie: addMovie,
     updatedMovie: updateMovie,
     deleteMovie: deleteMovie

@@ -4,7 +4,6 @@ import UsersService from '../Service/Users.Service'
 
 const userEndpoint = (router) => {
     router.post('/users/register',async (request,response,next) =>{
-        console.log(request.body)
         let result = await UsersService.registerUser(request.body)
         if(result.succes){
             response.status(200).send(result)
@@ -14,7 +13,6 @@ const userEndpoint = (router) => {
     });
 
     router.post('/users/login',async (request,response,next) => {
-        console.log(request.body)
         let result = await UsersService.loginUser(request.body)
         if(result.succes){
             response.status(200).send(result)
@@ -23,7 +21,7 @@ const userEndpoint = (router) => {
         }
     })
 
-    router.post('/users/logout',async (request,response,next) => {
+    router.delete('/users/logout',async (request,response,next) => {
         let token = request.header('x-auth-token')
         let result = await UsersService.logoutUser(token)
         if(result.succes){

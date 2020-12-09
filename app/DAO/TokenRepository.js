@@ -75,9 +75,27 @@ function deleteToken(val){
     })
 }
 
+function deleteAuthTokensByAcc_id(acc_id){
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let deleteQuery = "DELETE FROM Tokens WHERE acc_id="+acc_id+" AND type='auth'";
+    return new Promise((resolve,reject) => {
+        db.run(deleteQuery,(error)=>{
+            if (error) {
+                console.log('Error running sql: ' + deleteQuery)
+                console.log(error)
+                reject(error)
+            } else {
+                db.close()
+                resolve()
+            }
+        })
+    })
+}
+
 export default {
     saveToken: saveToken,
     getTokenByAccId: getTokenByAccId,
     getTokenByTokenValue: getTokenByTokenValue,
-    deleteToken: deleteToken
+    deleteToken: deleteToken,
+    deleteAuthTokensByAcc_id: deleteAuthTokensByAcc_id
 }

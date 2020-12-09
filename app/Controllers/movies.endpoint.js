@@ -8,6 +8,12 @@ const moviesEndpoint = (router) => {
         response.status(200).send(result)
     })
 
+    router.get('/movies/get/:movie_id', async (request,response,next) => {
+        let movie_id = request.params.movie_id
+        let result = await MoviesService.getMovie(movie_id)
+        response.status(200).send(result)
+    })
+
     router.post('/movies/new', async (request,response,next) => {
         let result = await MoviesService.addMovie(request.body,request.header('x-auth-token'))
         console.log(result)

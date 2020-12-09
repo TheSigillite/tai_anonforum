@@ -38,7 +38,7 @@ async function logoutUser(userToken){
 }
 
 async function makeMod(newMod,moderatorToken){
-    let verificationResult = VerifyUser.verifyToken(moderatorToken,true)
+    let verificationResult = await VerifyUser.verifyToken(moderatorToken,true)
     try{
         if(verificationResult.succes){
             let userToMod = await UserRepository.getUserByLogin(newMod.login)
@@ -46,7 +46,7 @@ async function makeMod(newMod,moderatorToken){
                 return {succes: false, message: "User with this username does not exist"}
             } else {
                 await UserRepository.makeModerator(userToMod.acc_id)
-                return {succes: true, message: "Your review has been added."}
+                return {succes: true, message: "User has been made moderator."}
             }
         } else {
             return verificationResult

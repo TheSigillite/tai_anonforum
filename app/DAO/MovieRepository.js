@@ -22,6 +22,24 @@ function getAllMovies() {
     })
 }
 
+function getMovieByMovieId(movie_id){
+    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let getQuery = 'SELECT * FROM Movies WHERE movie_id = '+movie_id;
+    return new Promise((resolve, reject) => {
+        db.get(getQuery, [], (error, result) => {
+            if (error) {
+                console.log('Error running sql: ' + getQuery)
+                console.log(error)
+                reject(error)
+            } else {
+                console.log(result)
+                db.close()
+                resolve(result)
+            }
+        })
+    })
+}
+
 function addMovie(movie) {
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
     let lastIDquery = 'SELECT MAX(movie_id) AS lastMovieID FROM Movies';
@@ -88,6 +106,7 @@ function updateMovie(movie){
 
 export default {
     getAllMovies: getAllMovies,
+    getMovieByMovieId: getMovieByMovieId,
     addMovie: addMovie,
     deleteMovie: deleteMovie,
     updateMovie: updateMovie

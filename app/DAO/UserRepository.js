@@ -74,7 +74,7 @@ function getUserById(acc_id){
 
 function makeModerator(acc_id){
     let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
-    let updateQuery = "UPDATE Useraccounts SET is_adm=TRUE WHERE acc_id="+acc_id
+    let updateQuery = "UPDATE Useraccounts SET is_adm=1 WHERE acc_id="+acc_id
     return new Promise((resolve,reject) => {
         db.run(updateQuery,(error) => {
             if (error) {

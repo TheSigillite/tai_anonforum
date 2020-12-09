@@ -52,7 +52,8 @@ async function issueToken(loginCredentials){
         if(userPasswd.passwd===loginCredentials.passwd){
             //let result = {succes: true, message: "pass ok"}
             //response.status(200).send(result)
-            let tokenData={acc_id: userData.acc_id, login: userData.login, passwd: userPasswd.passwd}
+            let tokenData={acc_id: userData.acc_id, login: userData.login, passwd: userPasswd.passwd, createTime: Date.now()}
+            await TokenRepository.deleteAuthTokensByAcc_id(userData.acc_id)
             let tokenJWT = jwt.sign(tokenData,config.JwtSecret,{expiresIn: '3h'})
             await TokenRepository.saveToken({acc_id: userData.acc_id, create_time: Math.floor(Date.now()/1000), type: 'auth', value: tokenJWT})
             return {succes: true ,tokenPack:{is_adm: userData.is_adm, token: tokenJWT}}
