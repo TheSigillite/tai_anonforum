@@ -17,29 +17,17 @@ const moviesEndpoint = (router) => {
     router.post('/movies/new', async (request,response,next) => {
         let result = await MoviesService.addMovie(request.body,request.header('x-auth-token'))
         console.log(result)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(401).send(result)
-        }
+        response.status(200).send(result)
     })
 
     router.put('/movies/update', async (request,response,next) => {
         let result = await MoviesService.updatedMovie(request.body,request.header('x-auth-token'))
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(401).send(result)
-        }
+        response.status(200).send(result)
     })
 
     router.delete('/movies/delete', async (request,response,next) => {
         let result = await MoviesService.deleteMovie(request.body,request.header('x-auth-token'))
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(401).send(result)
-        }
+        response.status(200).send(result)
     })
 }
 

@@ -5,40 +5,24 @@ import UsersService from '../Service/Users.Service'
 const userEndpoint = (router) => {
     router.post('/users/register',async (request,response,next) =>{
         let result = await UsersService.registerUser(request.body)
-        if(result.succes){
             response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
     });
 
     router.post('/users/login',async (request,response,next) => {
         let result = await UsersService.loginUser(request.body)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
+        response.status(200).send(result)
     })
 
     router.delete('/users/logout',async (request,response,next) => {
         let token = request.header('x-auth-token')
         let result = await UsersService.logoutUser(token)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
+        response.status(200).send(result)
     })
 
     router.post('/users/makemod', async (request,response,next) => {
         let token = request.header('x-auth-token')
         let result = await UsersService.makeMod(request.body,token)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
+        response.status(200).send(result)
     })
 }
 

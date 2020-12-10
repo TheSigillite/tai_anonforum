@@ -11,22 +11,14 @@ const reviewsEndpoint = (router) => {
         let newReview = request.body
         let token = request.header('x-auth-token')
         let result = await ReviewsService.addNewReview(newReview,token)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
+        response.status(200).send(result)
     });
 
     router.delete('/reviews/delete', async (request,response,next) => {
         let toDelete = request.body
         let token = request.header('x-auth-token')
         let result = await ReviewsService.deleteReview(toDelete,token)
-        if(result.succes){
-            response.status(200).send(result)
-        } else {
-            response.status(409).send(result)
-        }
+        response.status(200).send(result)
     })
 
 }
