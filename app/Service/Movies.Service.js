@@ -2,7 +2,14 @@ import { reject, resolve } from 'bluebird'
 import VerifyUser from '../Auth/VerifyUser'
 import MovieRepository from '../DAO/MovieRepository'
 import ReviewRepository from '../DAO/ReviewRepository'
-
+/**
+ * Checks if a link is a valid static image resource
+ * @param {string} imagelink - url to image resource
+ */
+async function checkImageURL(imagelink) {
+    let urlREGEX = new RegExp(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/)
+    return urlREGEX.test(imagelink)
+}
 /**
  * Retrieves a list of all movies currently in database
  */
@@ -32,9 +39,14 @@ async function addMovie(newMovie,token){
     console.log(verificationResult)
     try{
         if(verificationResult.succes){
-            await MovieRepository.addMovie(newMovie)
-            console.log("movie was added")
-            return {succes: true, message: "Movie has been added succesfully"}
+            let urlTest = await checkImageURL(newMovie.cover)
+            if(!urlTest){
+                return {succes: false, message: "Cover link is not a valid static resource"}
+            } else {
+                await MovieRepository.addMovie(newMovie)
+                console.log("movie was added")
+                return {succes: true, message: "Movie has been added succesfully"}
+            }
         } else {
             console.log("cum")
             return verificationResult
@@ -59,8 +71,13 @@ async function updateMovie(updatedMovie,token){
     let verificationResult = await VerifyUser.verifyToken(token,true)
     try{
         if(verificationResult.succes){
-            await MovieRepository.updateMovie(updatedMovie)
-            return {succes: true, message: "Movie has been succesfully modified"}
+            let urlTest = await checkImageURL(newMovie.cover)
+            if(!urlTest){
+                return {succes: false, message: "Cover link is not a valid static resource"}
+            } else {
+                await MovieRepository.updateMovie(updatedMovie)
+                return {succes: true, message: "Movie has been succesfully modified"}
+            } 
         } else {
             return verificationResult
         }
