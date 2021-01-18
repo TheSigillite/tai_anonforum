@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const { result } = require('lodash');
 
 function savePassword(newUser,acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let insertQuery = "INSERT INTO UserPasswd(acc_id,passwd) VALUES("
         +acc_id+",'"+newUser.passwd+"')"
     return new Promise((resolve,reject) => {
@@ -22,7 +22,7 @@ function savePassword(newUser,acc_id){
 }
 
 function getPassword(acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM UserPasswd WHERE acc_id="+acc_id
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {

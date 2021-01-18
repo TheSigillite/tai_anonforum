@@ -7,14 +7,19 @@ import UserRepository from '../DAO/UserRepository'
  * @param {number} movie_id - id of a movie
  */
 async function getMovieReviews(movie_id){
-    let reviewsRaw = await ReviewRepository.getMovieReviews(movie_id)
-    var reviewsDone = []
-    for(var i=0;i<reviewsRaw.length;i++){
-        var review = reviewsRaw[i]
-        var poster = await UserRepository.getUserById(review.acc_id)
-        reviewsDone.push({rev_id: review.rev_id, author: poster.login, rev: review.rev})
+    try{
+       let reviewsRaw = await ReviewRepository.getMovieReviews(movie_id)
+        var reviewsDone = []
+        for(var i=0;i<reviewsRaw.length;i++){
+            var review = reviewsRaw[i]
+            var poster = await UserRepository.getUserById(review.acc_id)
+            reviewsDone.push({rev_id: review.rev_id, author: poster.login, rev: review.rev})
+        }
+        return reviewsDone 
+    } catch(error){
+        console.log(error);
     }
-    return reviewsDone
+    
 }
 /**
  * Adds New Review after verification

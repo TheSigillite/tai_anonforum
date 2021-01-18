@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const { result } = require('lodash');
 
 function newReview(newreview,user){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let lastIdQuery = "SELECT MAX(rev_id) as lastRevID FROM Reviews"
     return new Promise((resolve,reject)=>{
         var lastId = 1
@@ -35,7 +35,7 @@ function newReview(newreview,user){
 }
 
 function deleteReview(rev_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let deleteQuery = "DELETE FROM Reviews WHERE rev_id = "+rev_id;
     return new Promise((resolve,reject)=>{
         db.run(deleteQuery,(error)=>{
@@ -52,7 +52,7 @@ function deleteReview(rev_id){
 }
 
 function deleteAllMoviesReviews(movie_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let deleteQuery = "DELETE FROM Reviews WHERE movie_id = "+movie_id;
     return new Promise((resolve,reject)=>{
         db.run(deleteQuery,(error)=>{
@@ -69,7 +69,7 @@ function deleteAllMoviesReviews(movie_id){
 }
 
 function getMovieReviews(movie_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Reviews WHERE movie_id="+movie_id
     return new Promise((resolve, reject) => {
         db.all(getQuery, [], (error, result) => {
@@ -87,7 +87,7 @@ function getMovieReviews(movie_id){
 }
 
 function getReviewById(rev_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Reviews WHERE rev_id="+rev_id
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {

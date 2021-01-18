@@ -26,6 +26,7 @@
     "cors": "2.8.5",
     "esm": "^3.2.25",
     "express": "4.17.1",
+    "express-csp-header": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "4.17.15",
     "moment": "^2.25.3",

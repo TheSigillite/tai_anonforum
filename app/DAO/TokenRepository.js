@@ -5,7 +5,7 @@ const { result } = require('lodash');
 
 
 function saveToken(newToken){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let insertQuery = "INSERT INTO Tokens(acc_id,create_time,type,value) VALUES("
         +newToken.acc_id+","+newToken.create_time+",'auth','"+newToken.value+"')"
     return new Promise((resolve,reject) => {
@@ -23,7 +23,7 @@ function saveToken(newToken){
 }
 
 function getTokenByAccId(acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Tokens WHERE acc_id="+acc_id
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {
@@ -41,7 +41,7 @@ function getTokenByAccId(acc_id){
 }
 
 function getTokenByTokenValue(val){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Tokens WHERE value='"+val+"'"
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {
@@ -59,7 +59,7 @@ function getTokenByTokenValue(val){
 }
 
 function deleteToken(val){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let deleteQuery = "DELETE FROM Tokens WHERE value='"+val+"'";
     return new Promise((resolve,reject) => {
         db.run(deleteQuery,(error)=>{
@@ -76,7 +76,7 @@ function deleteToken(val){
 }
 
 function deleteAuthTokensByAcc_id(acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let deleteQuery = "DELETE FROM Tokens WHERE acc_id="+acc_id+" AND type='auth'";
     return new Promise((resolve,reject) => {
         db.run(deleteQuery,(error)=>{

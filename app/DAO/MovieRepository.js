@@ -6,7 +6,8 @@ const { result } = require('lodash');
 
 
 function getAllMovies() {
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    console.log(__dirname)
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let query = 'SELECT * FROM Movies'
     return new Promise((resolve, reject) => {
         db.all(query, [], (error, result) => {
@@ -23,7 +24,7 @@ function getAllMovies() {
 }
 
 function getMovieByMovieId(movie_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = 'SELECT * FROM Movies WHERE movie_id = '+movie_id;
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {
@@ -41,7 +42,7 @@ function getMovieByMovieId(movie_id){
 }
 
 function addMovie(movie) {
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let lastIDquery = 'SELECT MAX(movie_id) AS lastMovieID FROM Movies';
     return new Promise((resolve,reject) => {
             var lastID = undefined
@@ -70,7 +71,7 @@ function addMovie(movie) {
 }
 
 function deleteMovie(movieID){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let deleteQuery = 'DELETE FROM Movies WHERE movie_id = '+movieID;
     return new Promise((resolve,reject) => {
         db.run(deleteQuery,(error)=>{
@@ -87,7 +88,7 @@ function deleteMovie(movieID){
 }
 
 function updateMovie(movie){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let updateQuery = "UPDATE Movies SET title = '"+ movie.title +"', cover = '"+ movie.cover +"', director = '"
         + movie.director +"',premiere = "+ movie.premiere +" WHERE movie_id = "+movie.movie_id
     return new Promise((resolve,reject) => {

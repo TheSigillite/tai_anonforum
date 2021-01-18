@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const { result } = require('lodash');
 
 function newUser(newUser){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let lastIdQuery = "SELECT MAX(acc_id) as lastAccID FROM Useraccounts"
     return new Promise((resolve,reject)=>{
         var lastId = 1
@@ -37,7 +37,7 @@ function newUser(newUser){
 }
 
 function getUserByLogin(userLogin){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Useraccounts WHERE login='"+userLogin+"'"
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {
@@ -55,7 +55,7 @@ function getUserByLogin(userLogin){
 }
 
 function getUserById(acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let getQuery = "SELECT * FROM Useraccounts WHERE acc_id="+acc_id
     return new Promise((resolve, reject) => {
         db.get(getQuery, [], (error, result) => {
@@ -73,7 +73,7 @@ function getUserById(acc_id){
 }
 
 function makeModerator(acc_id){
-    let db = new sqlite3.Database('C:/projects/TAI_anonforum/app/DAO/anonforum.sqlite');
+    let db = new sqlite3.Database(__dirname + '\\anonforum.sqlite');
     let updateQuery = "UPDATE Useraccounts SET is_adm=1 WHERE acc_id="+acc_id
     return new Promise((resolve,reject) => {
         db.run(updateQuery,(error) => {
